@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - speaker_profile
+id: speaker_profile.custom_view_mode
+label: 'Speaker Details'
+targetEntityType: node
+cache: true
+custom_settings: true
