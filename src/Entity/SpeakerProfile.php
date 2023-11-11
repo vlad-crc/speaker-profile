@@ -90,10 +90,10 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['label'] = BaseFieldDefinition::create('string')
+    $fields['name'] = BaseFieldDefinition::create('string')
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE)
-      ->setLabel(t('Label'))
+      ->setLabel(t('Name'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 255)
       ->setDisplayOptions('form', [
@@ -105,6 +105,57 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
         'label' => 'hidden',
         'type' => 'string',
         'weight' => -5,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['portrait'] = BaseFieldDefinition::create('image')
+      ->setLabel(t('Portrait'))
+      ->setDescription(t('The image for the portrait'))
+      ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE)
+      ->setRequired(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'image_image',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'image',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['topics_of_expertise'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Topics of Expertise'))
+      ->setDescription(t('The taxonomy terms representing the topics of expertise'))
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default:taxonomy_term')
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED) // Adjust as needed
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'entity_reference_label',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+
+    $fields['biography'] = BaseFieldDefinition::create('text_long')
+      ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE)
+      ->setLabel(t('Biography'))
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => 10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'type' => 'text_default',
+        'label' => 'above',
+        'weight' => 10,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -128,22 +179,6 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
         'settings' => [
           'format' => 'enabled-disabled',
         ],
-      ])
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['description'] = BaseFieldDefinition::create('text_long')
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE)
-      ->setLabel(t('Description'))
-      ->setDisplayOptions('form', [
-        'type' => 'text_textarea',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('view', [
-        'type' => 'text_default',
-        'label' => 'above',
-        'weight' => 10,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
