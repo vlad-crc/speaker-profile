@@ -1,0 +1,10 @@
+entity.speaker_profile.edit_form:
+  route_name: entity.speaker_profile.edit_form
+  group: speaker_profile
+  title: 'Edit'
+
+entity.speaker_profile.delete_form:
+  route_name: entity.speaker_profile.delete_form
+  group: speaker_profile
+  title: 'Delete'
+  weight: 10

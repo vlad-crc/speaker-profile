@@ -1,0 +1,92 @@
+<?php declare(strict_types = 1);
+
+/**
+ * @file
+ * Provides a speaker profile entity type.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function speaker_profile_theme(): array {
+  return [
+    'speaker_profile' => ['render element' => 'elements'],
+  ];
+}
+
+/**
+ * Prepares variables for speaker profile templates.
+ *
+ * Default template: speaker-profile.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the speaker profile information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_speaker_profile(array &$variables): void {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function speaker_profile_user_cancel($edit, UserInterface $account, $method): void {
+  switch ($method) {
+    case 'user_cancel_block_unpublish':
+      // Unpublish speaker profiles.
+      $storage = \Drupal::entityTypeManager()->getStorage('speaker_profile');
+      $speaker_profile_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->condition('status', 1)
+        ->accessCheck(FALSE)
+        ->execute();
+      foreach ($storage->loadMultiple($speaker_profile_ids) as $speaker_profile) {
+        $speaker_profile->set('status', FALSE)->save();
+      }
+      break;
+
+    case 'user_cancel_reassign':
+      // Anonymize speaker profiles.
+      $storage = \Drupal::entityTypeManager()->getStorage('speaker_profile');
+      $speaker_profile_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->accessCheck(FALSE)
+        ->execute();
+      foreach ($storage->loadMultiple($speaker_profile_ids) as $speaker_profile) {
+        $speaker_profile->setOwnerId(0)->save();
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for user entities.
+ */
+function speaker_profile_user_predelete(UserInterface $account): void {
+  // Delete speaker profiles that belong to this account.
+  $storage = \Drupal::entityTypeManager()->getStorage('speaker_profile');
+  $speaker_profile_ids = $storage->getQuery()
+    ->condition('uid', $account->id())
+    ->accessCheck(FALSE)
+    ->execute();
+  $storage->delete(
+    $storage->loadMultiple($speaker_profile_ids)
+  );
+  // Delete old revisions.
+  $speaker_profile_ids = $storage->getQuery()
+    ->allRevisions()
+    ->condition('uid', $account->id())
+    ->accessCheck(FALSE)
+    ->execute();
+  foreach (array_keys($speaker_profile_ids) as $revision_id) {
+    $storage->deleteRevision($revision_id);
+  }
+}

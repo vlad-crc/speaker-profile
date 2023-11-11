@@ -1,0 +1,7 @@
+entity.speaker_profile.settings:
+  path: 'admin/structure/speaker-profile'
+  defaults:
+    _form: '\Drupal\speaker_profile\Form\SpeakerProfileSettingsForm'
+    _title: 'Speaker profile'
+  requirements:
+    _permission: 'administer speaker profiles'

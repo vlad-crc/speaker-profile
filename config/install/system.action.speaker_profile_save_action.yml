@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - speaker_profile
+id: speaker_profile_save_action
+label: 'Save speaker profiles'
+type: speaker_profile
+plugin: entity:save_action:speaker_profile
+configuration: {  }

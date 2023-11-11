@@ -1,0 +1,3 @@
+administer speaker profiles:
+  title: 'Administer speaker profiles'
+  restrict access: true
