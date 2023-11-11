@@ -28,7 +28,10 @@ class FeaturedSpeakerBlock extends BlockBase
     $content = $this->getRandomSpeaker();
 
     kint($content);
-    return [$content, '#theme'=>'featured_speaker'];
+    return [
+      '#theme' => 'featured_speaker',
+      '#content'=> $content,
+    ];
   }
 
   protected function getRandomSpeaker()

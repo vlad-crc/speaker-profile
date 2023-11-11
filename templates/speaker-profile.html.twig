@@ -13,16 +13,12 @@
  * @see template_preprocess_speaker_profile()
  */
 #}
-<h1>{{ content[0].name }}</h1>
-<h2>kek</h2>
 <article{{ attributes }}>
-  {{- content -}}
-  <h2>bljeh</h2>
   {% if view_mode != 'full' %}
     {{ title_prefix }}
     {{ title_suffix }}
   {% endif %}
   {% if content %}
-    <h2>imakontent</h2>
+    {{- content -}}
   {% endif %}
 </article>
