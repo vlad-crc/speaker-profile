@@ -48,7 +48,6 @@ use Drupal\user\EntityOwnerTrait;
  *     "id" = "id",
  *     "revision" = "revision_id",
  *     "langcode" = "langcode",
- *     "label" = "label",
  *     "uuid" = "uuid",
  *     "owner" = "uid",
  *     "name" = "name",
@@ -61,7 +60,7 @@ use Drupal\user\EntityOwnerTrait;
  *   links = {
  *     "collection" = "/admin/content/speaker-profile",
  *     "add-form" = "/speaker-profile/add",
- *     "canonical" = "/speaker-profile/{speaker_profile}/",
+ *     "canonical" = "/speaker-profile/{speaker_profile}",
  *     "edit-form" = "/speaker-profile/{speaker_profile}/edit",
  *     "delete-form" = "/speaker-profile/{speaker_profile}/delete",
  *     "delete-multiple-form" = "/admin/content/speaker-profile/delete-multiple",
@@ -104,23 +103,6 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['label'] = BaseFieldDefinition::create('string')
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE)
-      ->setLabel(t('Label'))
-      ->setRequired(TRUE)
-      ->setSetting('max_length', 255)
-      ->setDisplayOptions('form', [
-        'type' => 'string_textfield',
-        'weight' => -5,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'string',
-        'weight' => -5,
-      ])
-      ->setDisplayConfigurable('view', TRUE);
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setRevisionable(TRUE)
@@ -172,7 +154,9 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
         'type' => 'entity_reference_label',
         'weight' => 0,
       ])
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setSetting('handler_settings', ['target_bundles' => ['expertise' => 'expertise']]);
+
 
 
     $fields['biography'] = BaseFieldDefinition::create('text_long')

@@ -1,7 +1,7 @@
 name: 'Speaker profile'
 type: module
-description: '@todo Add description.'
-package: '@todo Add package'
+description: 'Module that allows for creation and management of speaker profiles'
+package: 'Speakers'
 core_version_requirement: ^10
 libraries:
   - speaker_profile/styles

@@ -29,7 +29,6 @@ final class SpeakerProfileListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity): array {
     /** @var SpeakerProfileInterface $entity */
     $row['id'] = $entity->id();
-    $row['label'] = $entity->toLink();
     $row['status'] = $entity->get('status')->value ? $this->t('Enabled') : $this->t('Disabled');
     $username_options = [
       'label' => 'hidden',

@@ -1,0 +1,12 @@
+uuid: b5c10f16-55ce-4721-9810-c86f5808ba6a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: D13Oz0XScyQVpody34oLqDeEQqtzyGcle5wxG6Kk8_A
+id: speaker_profile.custom_view_mode
+label: 'Speaker View Mode'
+targetEntityType: node
+cache: true

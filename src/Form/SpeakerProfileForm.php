@@ -16,21 +16,21 @@ final class SpeakerProfileForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state): int {
     $result = parent::save($form, $form_state);
 
-    $message_args = ['%label' => $this->entity->toLink()->toString()];
+    $message_args = ['%name' => $this->entity->toLink()->toString()];
     $logger_args = [
-      '%label' => $this->entity->label(),
+      '%name' => $this->entity->label(),
       'link' => $this->entity->toLink($this->t('View'))->toString(),
     ];
 
     switch ($result) {
       case SAVED_NEW:
-        $this->messenger()->addStatus($this->t('New speaker profile %label has been created.', $message_args));
-        $this->logger('speaker_profile')->notice('New speaker profile %label has been created.', $logger_args);
+        $this->messenger()->addStatus($this->t('New speaker profile %name has been created.', $message_args));
+        $this->logger('speaker_profile')->notice('New speaker profile %name has been created.', $logger_args);
         break;
 
       case SAVED_UPDATED:
-        $this->messenger()->addStatus($this->t('The speaker profile %label has been updated.', $message_args));
-        $this->logger('speaker_profile')->notice('The speaker profile %label has been updated.', $logger_args);
+        $this->messenger()->addStatus($this->t('The speaker profile %name has been updated.', $message_args));
+        $this->logger('speaker_profile')->notice('The speaker profile %name has been updated.', $logger_args);
         break;
 
       default:
