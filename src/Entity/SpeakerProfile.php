@@ -7,10 +7,9 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Url;
 use Drupal\speaker_profile\SpeakerProfileInterface;
 use Drupal\user\EntityOwnerTrait;
-use Drupal\Core\Url;
-
 
 /**
  * Defines the speaker profile entity class.
@@ -52,6 +51,7 @@ use Drupal\Core\Url;
  *     "label" = "label",
  *     "uuid" = "uuid",
  *     "owner" = "uid",
+ *     "name" = "name",
  *   },
  *   revision_metadata_keys = {
  *     "revision_user" = "revision_uid",
@@ -61,7 +61,7 @@ use Drupal\Core\Url;
  *   links = {
  *     "collection" = "/admin/content/speaker-profile",
  *     "add-form" = "/speaker-profile/add",
- *     "canonical" = "/speaker-profile/{speaker_profile}",
+ *     "canonical" = "/speaker-profile/{speaker_profile}/",
  *     "edit-form" = "/speaker-profile/{speaker_profile}/edit",
  *     "delete-form" = "/speaker-profile/{speaker_profile}/delete",
  *     "delete-multiple-form" = "/admin/content/speaker-profile/delete-multiple",
@@ -84,6 +84,18 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
       $this->setOwnerId(0);
     }
   }
+  public function toUrl($rel = 'canonical', array $options = []) {
+    $options['absolute'] = TRUE;
+
+    if ($rel === 'canonical') {
+      $options['alias'] = '/speaker-profile/' . $this->get('name')->value;
+      // Add the 'name' parameter for the route.
+      $options['query']['name'] = $this->get('name')->value;
+    }
+
+    return Url::fromRoute('entity.speaker_profile.canonical', ['speaker_profile' => $this->id()], $options);
+  }
+
 
   /**
    * {@inheritdoc}

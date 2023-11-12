@@ -27,7 +27,7 @@ final class SpeakerProfileListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity): array {
-    /** @var \Drupal\speaker_profile\SpeakerProfileInterface $entity */
+    /** @var SpeakerProfileInterface $entity */
     $row['id'] = $entity->id();
     $row['label'] = $entity->toLink();
     $row['status'] = $entity->get('status')->value ? $this->t('Enabled') : $this->t('Disabled');
