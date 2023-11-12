@@ -100,16 +100,6 @@ function speaker_profile_user_predelete(UserInterface $account): void {
   }
 }
 
-/**
-  * Debugging preprocess.
- */
-function speaker_profile_preprocess_block(&$variables) {
-  // Check if the block is of type 'speaker_profile_block'.
-  if ($variables['elements']['#plugin_id'] == 'featured_speaker_block') {
-    $variables['#theme'] = 'featured_speaker';
-    kint($variables);
-  }
-}
 
 function speaker_profile_cron() {
   $last_run = \Drupal::state()->get('speaker_profile_last_cron_run', 0);
