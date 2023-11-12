@@ -15,6 +15,8 @@ use Drupal\user\UserInterface;
 function speaker_profile_theme(): array {
   $theme['speaker_profile'] = [
     'template' => 'speaker-profile',
+    'render element' => 'elements'
+
   ];
   $theme['featured_speaker'] = [
     'template' => 'featured-speaker',
@@ -35,6 +37,7 @@ function speaker_profile_theme(): array {
  *   An associative array containing:
  *   - elements: An associative array containing the speaker profile information and any
  *     fields attached to the entity.
+ *   - @toDo Check why the elements isn't labeled properly?
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_speaker_profile(array &$variables): void {
