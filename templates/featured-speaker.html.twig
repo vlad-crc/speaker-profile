@@ -1,11 +1,1 @@
-<p>{{ content.name }}</p>
-<h2>sometiteles</h2>
-<article{{ attributes }}>
-  {% if view_mode != 'full' %}
-    {{ title_prefix }}
-    {{ title_suffix }}
-  {% endif %}
-  {% if content %}
-    {{- content -}}
-  {% endif %}
-</article>
+{{ content.name }}

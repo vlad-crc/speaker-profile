@@ -5,6 +5,7 @@
  * Provides a speaker profile entity type.
  */
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Render\Element;
 use Drupal\user\UserInterface;
 
@@ -107,5 +108,20 @@ function speaker_profile_preprocess_block(&$variables) {
   if ($variables['elements']['#plugin_id'] == 'featured_speaker_block') {
     $variables['#theme'] = 'featured_speaker';
     kint($variables);
+  }
+}
+
+function speaker_profile_cron() {
+  $last_run = \Drupal::state()->get('speaker_profile_last_cron_run', 0);
+
+  $requestTime = Drupal::time()->getRequestTime();
+  \Drupal::logger('speaker_profile')->notice('Current timestamp: @current, Last run timestamp: @last_run', [
+    '@current' => time(),
+    '@last_run' => $last_run,
+  ]);
+  if ($requestTime - $last_run >= 86400) {
+    Cache::invalidateTags(['featured_speaker_block']);
+
+    \Drupal::state()->set('speaker_profile_last_cron_run', $requestTime);
   }
 }

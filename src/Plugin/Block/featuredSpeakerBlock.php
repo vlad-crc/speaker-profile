@@ -27,7 +27,6 @@ class FeaturedSpeakerBlock extends BlockBase
     // Build and return the block content.
     $content = $this->getRandomSpeaker();
 
-    kint($content);
     return [
       '#theme' => 'featured_speaker',
       '#content'=> $content,
@@ -41,24 +40,31 @@ class FeaturedSpeakerBlock extends BlockBase
     $entityTypeManager = \Drupal::entityTypeManager();
     $storage = $entityTypeManager->getStorage($entityType);
 
+    // Get all
     $query = $storage->getQuery()
-      ->addTag('random_order')
-      ->range(0, 1)
       ->accessCheck(false)
       ->execute();
 
-    $speakerLoad = reset($query);
+    // Get random
+    $randomSpeakerId = $query[array_rand($query)];
 
-    $speaker = $storage->load($speakerLoad);
+    // Load speaker entity
+    $speakerLoad = \Drupal\speaker_profile\Entity\SpeakerProfile::load($randomSpeakerId);
 
-    $speakerName = $speaker->get('name')->value;
-    $speakerPortrait = $speaker->get('portrait')->entity->getFileUri();
-    $speakerExpertise = $speaker->get('topics_of_expertise')->referencedEntities();
+    // Load fields
+    $speakerName = $speakerLoad->get('name')->value;
+    $speakerPortrait = $speakerLoad->get('portrait')->entity->getFileUri();
+    $speakerExpertise = $speakerLoad->get('topics_of_expertise')->referencedEntities();
+    $cache_tags = $speakerLoad->getCacheTags();
 
     $content = [
       'name'=>$speakerName,
       'portrait'=>$speakerPortrait,
-      'expertise'=>$speakerExpertise
+      'expertise'=>$speakerExpertise,
+      '#cache' => [
+        'tags' => $cache_tags,
+        'max-age' => 86400,
+      ],
     ];
 
     return $content;
