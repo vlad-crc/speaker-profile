@@ -1,1 +1,13 @@
-{{ content.name }}
+{{ attach_library('speaker_profile/styles') }}
+
+<div class="featured-speaker">
+  <img class="featured-speaker__portrait" src="{{ content.portrait }}" />
+  <div class="featured-speaker__name">{{ content.name }}</div>
+
+  <span class="featured-speaker__label">Topics Of Expertise:</span>
+  <div class="featured-speaker__topics">
+    {% for term in content.expertise %}
+      <span>{{ term }}</span>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+</div>

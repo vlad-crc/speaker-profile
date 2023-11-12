@@ -5,6 +5,7 @@ namespace Drupal\speaker_profile\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Url;
 
 
 /**
@@ -53,14 +54,25 @@ class FeaturedSpeakerBlock extends BlockBase
 
     // Load fields
     $speakerName = $speakerLoad->get('name')->value;
-    $speakerPortrait = $speakerLoad->get('portrait')->entity->getFileUri();
-    $speakerExpertise = $speakerLoad->get('topics_of_expertise')->referencedEntities();
-    $cache_tags = $speakerLoad->getCacheTags();
 
+    // Get portrait
+    $speakerPortrait = $speakerLoad->get('portrait')->entity;
+    $speakerPortraitUri = $speakerPortrait->getFileUri();
+    $speakerPortraitUrl = \Drupal::service('file_url_generator')->generateString($speakerPortraitUri);
+
+    // Get topics of expertise
+    $speakerExpertise = $speakerLoad->get('topics_of_expertise')->referencedEntities();
+    $topics = [];
+    foreach ($speakerExpertise as $term) {
+      $topics[] = $term->getName();
+    }
+
+    // Set caching rules and pass variables.
+    $cache_tags = $speakerLoad->getCacheTags();
     $content = [
       'name'=>$speakerName,
-      'portrait'=>$speakerPortrait,
-      'expertise'=>$speakerExpertise,
+      'portrait'=>$speakerPortraitUrl,
+      'expertise'=>$topics,
       '#cache' => [
         'tags' => $cache_tags,
         'max-age' => 86400,

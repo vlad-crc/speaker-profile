@@ -1,0 +1,10 @@
+uuid: 5b32d72a-620a-4ed3-9243-9105fb81f915
+langcode: en
+status: true
+dependencies:
+  module:
+    - speaker_profile
+id: speaker_profile.speaker_details
+label: 'Speaker Details'
+targetEntityType: speaker_profile
+cache: true

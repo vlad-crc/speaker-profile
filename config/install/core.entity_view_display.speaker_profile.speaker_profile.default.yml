@@ -1,0 +1,84 @@
+uuid: 52c2bf2c-4f08-40c8-aa09-0aa0c70da50b
+langcode: en
+status: true
+dependencies:
+  module:
+    - image
+    - speaker_profile
+    - text
+    - user
+id: speaker_profile.speaker_profile.default
+targetEntityType: speaker_profile
+bundle: speaker_profile
+mode: default
+content:
+  biography:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  created:
+    type: timestamp
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+  name:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+  portrait:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  status:
+    type: boolean
+    label: above
+    settings:
+      format: enabled-disabled
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  topics_of_expertise:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  uid:
+    type: author
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
+    region: content
+hidden: {  }

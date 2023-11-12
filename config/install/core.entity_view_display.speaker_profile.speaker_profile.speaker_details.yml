@@ -1,0 +1,54 @@
+uuid: 1f768459-e7ec-4b07-bbbb-e2f9fcfe8ecf
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.speaker_profile.speaker_details
+  module:
+    - image
+    - speaker_profile
+    - text
+id: speaker_profile.speaker_profile.speaker_details
+targetEntityType: speaker_profile
+bundle: speaker_profile
+mode: speaker_details
+content:
+  biography:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  name:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  portrait:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  topics_of_expertise:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  created: true
+  label: true
+  status: true
+  uid: true
