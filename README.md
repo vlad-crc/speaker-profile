@@ -34,13 +34,17 @@ The block is set up to stay cached for a day, and should display the same speake
 ## Bonus Challenges
 
 **Revisions and Translations**
+
 The entity is set up to support translations and revisions. Revisions can be tested  by editing any speaker. At the bottom of the edit page you will be given an option to create a new revision.
 
 **Speaker Details View Mode**
+
 You can see the custom view mode configured at **/admin/structure/speaker-profile/display/speaker_details**. Here you can switch between the default and custom view mode.
 
 **User Friendly URL**
+
 The speaker pages follow a pattern of **/speaker-profile/{id}?name={name}**. This pattern allows for a bit more user friendly url's without causing issues. If we followed the **/speaker-profile/{name}** pattern we would have issues as soon as two speakers have the same name.
 
 **Pitfalls of caching strategy for Featured Speaker**
+
 Caching a dynamic content block can cause issues mainly with causing our application to display stale information. For example, if the speakers details are changed during our cached period the component will keep displaying the outdated data it retrieved from the last cron job cache invalidation.
