@@ -90,6 +90,7 @@ final class SpeakerProfile extends RevisionableContentEntityBase implements Spea
       $options['alias'] = '/speaker-profile/' . $this->get('name')->value;
       // Add the 'name' parameter for the route.
       $options['query']['name'] = $this->get('name')->value;
+
     }
 
     return Url::fromRoute('entity.speaker_profile.canonical', ['speaker_profile' => $this->id()], $options);
